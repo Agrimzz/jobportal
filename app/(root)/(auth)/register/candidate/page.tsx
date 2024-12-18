@@ -45,7 +45,6 @@ const CandidateRegister = () => {
         error.response.data &&
         error.response.data.message
       ) {
-        // Set the error message returned from the server
         setError(error.response.data.message)
       } else {
         // Fallback for unexpected errors

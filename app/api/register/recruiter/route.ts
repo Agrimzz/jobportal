@@ -1,5 +1,6 @@
 import { connectToDatabase } from "@/lib/database"
 import User from "@/lib/database/models/user.modal"
+import bcrypt from "bcryptjs"
 
 export const POST = async (req: Request) => {
   const { photo, fullname, email, location, url, password, type } =
@@ -21,7 +22,7 @@ export const POST = async (req: Request) => {
         email,
         location,
         url,
-        password,
+        password: bcrypt.hashSync(password, 10),
         type,
       })
       return new Response(JSON.stringify(newUser), { status: 200 })
