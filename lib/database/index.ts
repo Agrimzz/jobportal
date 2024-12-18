@@ -6,7 +6,10 @@ const MONGODB_URI = process.env.MONGODB_URI
 const cached = (global as any).mongoose || { conn: null, promise: null }
 
 export const connectToDatabase = async () => {
-  if (cached.conn) return cached.conn
+  if (cached.conn) {
+    console.log("Database already connected.")
+    return cached.conn
+  }
   if (!MONGODB_URI) return console.log("MONGODB_URI not defined")
 
   cached.promise =

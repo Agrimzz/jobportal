@@ -6,3 +6,12 @@
 body {
   font-family: "Inter", sans-serif;
 }
+
+.notification {
+  display: none;
+  z-index: 20;
+  background-color: #05a44d;
+  color: #fff;
+  padding: 1rem 0.5rem;
+  border-radius: 0.375rem;
+}

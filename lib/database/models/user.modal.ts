@@ -32,7 +32,7 @@ const userSchema: Schema<IUser> = new Schema({
   photo: {
     type: String,
     required: function () {
-      return this.type === "candidate"
+      return this.type === "recruiter"
     },
   },
   location: {

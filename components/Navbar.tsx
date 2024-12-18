@@ -2,6 +2,7 @@
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import React from "react"
+import Button from "./Button"
 
 const Navbar = () => {
   const router = useRouter()
@@ -13,12 +14,7 @@ const Navbar = () => {
         </Link>
 
         <div className="flex gap-2 items-center bg-primary text-white rounded-md">
-          <button
-            className="px-4 py-2 rounded-md text-"
-            onClick={() => router.push("/login")}
-          >
-            Login
-          </button>
+          <Button title="Login" onClick={() => router.push("/login")} />
         </div>
       </div>
     </nav>
