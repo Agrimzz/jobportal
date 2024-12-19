@@ -2,6 +2,7 @@
 
 import Button from "@/components/Button"
 import { FileUploader } from "@/components/FileUploader"
+import { useUploadThing } from "@/lib/uploadthing"
 import { recruiterSchema } from "@/lib/validator"
 import axios from "axios"
 import Link from "next/link"
@@ -13,20 +14,33 @@ const RecruiterRegsiter = () => {
   const [error, setError] = useState("")
   const [files, setFiles] = useState<File[]>([])
   const [uploadedFileUrl, setUploadedFileUrl] = useState("")
+  const [isSending, setIsSending] = useState(false)
+  const { startUpload } = useUploadThing("imageUploader")
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setIsSending(true)
+    let uploadedImageUrl = uploadedFileUrl
 
     if (!uploadedFileUrl) {
       setError("Please upload a company logo!")
       return
+    }
+    if (files.length > 0) {
+      const uploadedImage = await startUpload(files)
+
+      if (!uploadedImage) {
+        setError("Something went wrong. Please try again later.")
+        return
+      }
+      uploadedImageUrl = uploadedImage[0].url
     }
 
     const formData = new FormData(e.target as HTMLFormElement)
     formData.append("photo", uploadedFileUrl)
 
     const payload = {
-      photo: uploadedFileUrl,
+      photo: uploadedImageUrl,
       fullname: formData.get("fullname") as string,
       type: "recruiter",
       email: formData.get("email") as string,
@@ -157,7 +171,11 @@ const RecruiterRegsiter = () => {
           />
         </div>
         {error && <p className="text-red-500 text-center">{error}</p>}
-        <Button title="Sign Up" className="w-full  bg-primary text-white " />
+        <Button
+          title="Sign Up"
+          className="w-full  bg-primary text-white "
+          disabled={isSending}
+        />
       </form>
 
       <div className="flex flex-col space-y-2 items-center">

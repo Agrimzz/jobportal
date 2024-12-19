@@ -1,5 +1,6 @@
 "use client"
 import Button from "@/components/Button"
+import useAuthstore from "@/store/useAuthstore"
 import axios from "axios"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -7,6 +8,7 @@ import React, { useState } from "react"
 
 const Login = () => {
   const router = useRouter()
+  const setUser = useAuthstore((state) => state.setUser)
   const [error, setError] = useState("")
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -21,6 +23,9 @@ const Login = () => {
     try {
       const response = await axios.post("/api/login", payload)
       if (response.status === 200) {
+        const { id: userId, fullname: name, type } = response.data.user
+
+        setUser({ userId, name, type })
         alert("Login successfull!")
         router.push("/")
       }
