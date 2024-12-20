@@ -5,6 +5,7 @@ import useAuthStore from "@/store/useAuthstore"
 import {
   IconBriefcase,
   IconCurrencyRupeeNepalese,
+  IconLoader2,
   IconLocation,
   IconMapPin,
 } from "@tabler/icons-react"
@@ -20,6 +21,7 @@ export default function JobPage() {
   const id = params.id
   const [data, setData] = useState<IJob>()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   const fetchData = async () => {
     try {
@@ -27,6 +29,8 @@ export default function JobPage() {
       setData(response.data)
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoading(false)
     }
   }
   useEffect(() => {
@@ -35,6 +39,14 @@ export default function JobPage() {
   useEffect(() => {
     if (userId) setIsLoggedIn(true)
   }, [userId])
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-[90vh]">
+        <IconLoader2 className="animate-spin text-primary" size={48} />
+      </div>
+    )
+  }
   return (
     <>
       <section className="bg-gray-100 w-full p-8 relative">
@@ -48,7 +60,9 @@ export default function JobPage() {
               />
               <div className="flex flex-col ">
                 <h1 className="text-lg font-bold capitalize">{data?.title}</h1>
-                <p className="text-sm font-semibold text-primary">Company</p>
+                <p className="text-sm font-semibold text-primary capitalize">
+                  {data?.recruiter?.fullname}
+                </p>
               </div>
             </div>
             <Button

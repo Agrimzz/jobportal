@@ -12,7 +12,6 @@ export const GET = async (
     await connectToDatabase()
     await User.init()
     const job = await Job.findById(id).populate("recruiter")
-    console.log("Job with recruiter populated:", job)
     if (!job) {
       return new Response(JSON.stringify({ message: "Job not found" }), {
         status: 404,

@@ -15,13 +15,13 @@ const Navbar = () => {
 
   return (
     <nav className="w-full  sticky top-0 bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto py-4 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto py-4 flex justify-between items-center px-4">
         <Link href="/" className="text-3xl font-bold">
           <span className="text-primary">Job</span>Portal
         </Link>
         {name ? (
           <div className="flex gap-4 items-center rounded-md">
-            <p className="font-bold">{name}</p>
+            <p className="font-bold hidden md:block">{name}</p>
             {type === "recruiter" && (
               <Button
                 title="Post a job"

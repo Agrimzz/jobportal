@@ -31,8 +31,8 @@ const CreateJob = () => {
     try {
       const response = await axios.post("/api/job/create", payload)
       if (response.status === 200) {
-        alert("Job posted successfully!")
         router.push(`/job/${response.data.job._id}`)
+        alert("Job posted successfully!")
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
@@ -42,8 +42,6 @@ const CreateJob = () => {
         error.response.data.message
       ) {
         setError(error.response.data.message)
-      } else {
-        setError("Something went wrong. Please try again later.")
       }
     }
   }
