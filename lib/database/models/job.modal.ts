@@ -6,7 +6,14 @@ export interface IJob {
   description: string
   salary: string
   experience: string
-  recruiter: { _id: string; fullname: string; email: string; photo: string }
+  recruiter: {
+    _id: string
+    fullname: string
+    email: string
+    photo: string
+    location: string
+    url: string
+  }
 }
 
 const JobSchema = new Schema<IJob>(
