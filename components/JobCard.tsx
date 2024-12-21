@@ -38,14 +38,14 @@ const JobCard = ({
         </p>
       </div>
 
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center">
         <p className="text-gray-500 text-base font-semibold">
           <span className="text-lg font-bold text-black">Rs.{salary}</span>
           /monthly
         </p>
         <Button
           title="View Details"
-          className="bg-primary text-white"
+          className="bg-primary text-white mt-4 md:mt-0"
           onClick={() => {
             router.push(`/job/${id}`)
           }}

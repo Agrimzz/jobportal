@@ -1,5 +1,6 @@
 import { connectToDatabase } from "@/lib/database"
 import Job from "@/lib/database/models/job.modal"
+import User from "@/lib/database/models/user.modal"
 
 export const GET = async (req: Request) => {
   const { searchParams } = new URL(req.url)
@@ -10,6 +11,7 @@ export const GET = async (req: Request) => {
     await connectToDatabase()
 
     const skip = (page - 1) * limit
+    await User.init()
     const jobs = await Job.find()
       .populate("recruiter")
       .skip(skip)

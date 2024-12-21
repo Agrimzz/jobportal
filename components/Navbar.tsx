@@ -14,7 +14,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="w-full  sticky top-0 bg-white shadow-sm">
+    <nav className="w-full  sticky top-0 bg-white shadow-sm z-50">
       <div className="max-w-7xl mx-auto py-4 flex justify-between items-center px-4">
         <Link href="/" className="text-3xl font-bold">
           <span className="text-primary">Job</span>Portal

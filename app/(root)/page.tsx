@@ -44,7 +44,7 @@ const Home = () => {
   return (
     <>
       <section className="max-w-full mx-auto bg-primary" id="jobs">
-        <div className="max-w-4xl mx-auto text-white py-12 text-center sm:py-24">
+        <div className="max-w-4xl mx-auto text-white py-12 text-center sm:py-24 px-4">
           <h1 className="text-xl font-bold sm:text-5xl">
             Unlock Opportunities, One Click Away
           </h1>

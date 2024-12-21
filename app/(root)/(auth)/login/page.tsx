@@ -23,9 +23,9 @@ const Login = () => {
     try {
       const response = await axios.post("/api/login", payload)
       if (response.status === 200) {
-        const { id: userId, fullname: name, type } = response.data.user
+        const { id: userId, fullname: name, type, email } = response.data.user
 
-        setUser({ userId, name, type })
+        setUser({ userId, name, type, email })
         alert("Login successfull!")
         router.push("/")
       }

@@ -1,4 +1,5 @@
 "use client"
+import ApplyModal from "@/components/ApplyModal"
 import Button from "@/components/Button"
 import { IJob } from "@/lib/database/models/job.modal"
 import useAuthStore from "@/store/useAuthstore"
@@ -15,13 +16,14 @@ import { useParams } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
 export default function JobPage() {
-  const { userId } = useAuthStore()
+  const { userId, name, email } = useAuthStore()
 
   const params = useParams()
   const id = params.id
   const [data, setData] = useState<IJob>()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [showModal, setShowModal] = useState(false)
 
   const fetchData = async () => {
     try {
@@ -48,8 +50,8 @@ export default function JobPage() {
     )
   }
   return (
-    <>
-      <section className="bg-gray-100 w-full p-8 relative">
+    <div>
+      <section className="bg-gray-100 w-full p-8 ">
         <div className="max-w-4xl bg-white mx-auto p-8 rounded-lg flex flex-col space-y-4">
           <div className="flex justify-between items-start">
             <div className="flex gap-2 items-center">
@@ -69,6 +71,7 @@ export default function JobPage() {
               title="Apply now"
               className="bg-primary text-white"
               disabled={!isLoggedIn}
+              onClick={() => setShowModal(true)}
             />
           </div>
 
@@ -144,6 +147,14 @@ export default function JobPage() {
           </div>
         </div>
       </section>
-    </>
+      <ApplyModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        jobId={id}
+        title={data?.title}
+        name={name}
+        email={email}
+      />
+    </div>
   )
 }

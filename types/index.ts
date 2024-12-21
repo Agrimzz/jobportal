@@ -15,3 +15,12 @@ export type JobCardProps = {
   location: string
   photo: string
 }
+
+export type ApplyModalProps = {
+  jobId: string | string[] | undefined
+  email: string | null
+  title: string | undefined
+  name: string | null
+  showModal: boolean
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>
+}
