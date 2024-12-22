@@ -4,7 +4,7 @@ import Button from "./Button"
 import { ApplyModalProps } from "@/types"
 import { IconX } from "@tabler/icons-react"
 import axios from "axios"
-import { uploadFiles, useUploadThing } from "@/lib/uploadthing"
+import { useUploadThing } from "@/lib/uploadthing"
 
 const ApplyModal = ({
   showModal,
@@ -15,9 +15,10 @@ const ApplyModal = ({
   email,
 }: ApplyModalProps) => {
   const [files, setFiles] = useState<File[]>([])
+  const [loading, setLoading] = useState(false)
 
   const modalRef = useRef<HTMLDivElement>(null)
-  const { startUpload } = useUploadThing("imageUploader")
+  const { startUpload } = useUploadThing("fileUploader")
 
   if (!showModal) return null
   const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -29,7 +30,7 @@ const ApplyModal = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     let uploadedFileUrl = ""
-
+    setLoading(true)
     if (files.length > 0) {
       const uploadedFile = await startUpload(files)
       if (!uploadedFile) {
@@ -40,16 +41,22 @@ const ApplyModal = ({
     }
     const formData = new FormData(e.target as HTMLFormElement)
     const payload = {
-      name: formData.get("name") as string,
-      email: formData.get("email") as string,
+      name: name as string,
+      email: email as string,
       cover: formData.get("cover") as string,
       jobId: jobId,
       resume: uploadedFileUrl,
     }
     try {
       const response = await axios.post(`/api/job/apply/${jobId}`, payload)
+      if (response.status === 200) {
+        setShowModal(false)
+        alert("Application sent successfully!")
+      }
     } catch (error) {
       console.log(error)
+    } finally {
+      setLoading(false)
     }
   }
   return (
@@ -107,7 +114,7 @@ const ApplyModal = ({
               type="file"
               name="resume"
               placeholder="Your resume"
-              accept=".pdf, .doc, .docx"
+              accept=".pdf"
               onChange={(e) => {
                 const file = e.target.files?.[0]
                 if (file && file.size > 2 * 1024 * 1024) {
@@ -132,7 +139,11 @@ const ApplyModal = ({
               required
             />
           </div>
-          <Button title="Apply" className="bg-primary text-white" />
+          <Button
+            title="Apply"
+            className="bg-primary text-white"
+            disabled={loading}
+          />
         </form>
       </div>
     </div>

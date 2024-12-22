@@ -9,6 +9,8 @@ export const POST = async (
 
   const { name, email, cover, resume } = await req.json()
 
+  console.log(name, email, cover, resume, id)
+
   try {
     await connectToDatabase()
     const newApplication = await Application.create({
