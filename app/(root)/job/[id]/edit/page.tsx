@@ -2,6 +2,7 @@
 import JobForm from "@/components/JobForm"
 import { IJob } from "@/lib/database/models/job.modal"
 import { IconLoader2 } from "@tabler/icons-react"
+import axios from "axios"
 import { useParams } from "next/navigation"
 
 import React, { useEffect, useState } from "react"
@@ -16,9 +17,9 @@ const UpdateJob = () => {
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const response = await fetch(`/api/job/${id}`)
-        const data = await response.json()
-        setJob(data)
+        const response = await axios.get(`/api/job/${id}`)
+
+        setJob(response.data)
       } catch (error) {
         console.error("Error fetching job:", error)
       } finally {

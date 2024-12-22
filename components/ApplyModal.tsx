@@ -140,7 +140,7 @@ const ApplyModal = ({
             />
           </div>
           <Button
-            title="Apply"
+            title={loading ? "Applying..." : "Apply"}
             className="bg-primary text-white"
             disabled={loading}
           />

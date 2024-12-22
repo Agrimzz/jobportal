@@ -15,7 +15,7 @@ const RecruiterRegsiter = () => {
   const [files, setFiles] = useState<File[]>([])
   const [uploadedFileUrl, setUploadedFileUrl] = useState("")
   const [isSending, setIsSending] = useState(false)
-  const { startUpload } = useUploadThing("fileUploader")
+  const { startUpload } = useUploadThing("imageUploader")
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

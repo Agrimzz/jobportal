@@ -12,6 +12,7 @@ import {
 } from "@tabler/icons-react"
 import Link from "next/link"
 import axios from "axios"
+import Image from "next/image"
 
 const JobCard = ({
   id,
@@ -58,11 +59,7 @@ const JobCard = ({
     <div className="bg-white p-12 rounded-lg space-y-4">
       <div className="flex justify-between">
         <div className="flex gap-4 items-center">
-          <img
-            src={photo}
-            alt={recruiter}
-            className="w-12 h-12 object-cover rounded-md"
-          />
+          <Image src={photo} alt={recruiter} width={48} height={48} />
           <div className="flex flex-col">
             <h4 className="text-lg font-semibold capitalize">{recruiter}</h4>
             <p className="text-gray-500 text-sm">{location}</p>

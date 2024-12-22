@@ -11,6 +11,7 @@ import {
   IconMapPin,
 } from "@tabler/icons-react"
 import axios from "axios"
+import Image from "next/image"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import React, { useEffect, useState } from "react"
@@ -55,10 +56,11 @@ export default function JobPage() {
         <div className="max-w-4xl bg-white mx-auto p-8 rounded-lg flex flex-col space-y-4">
           <div className="flex justify-between items-start">
             <div className="flex gap-2 items-center">
-              <img
-                src={`${data?.recruiter?.photo}`}
-                alt={`${data?.recruiter?.fullname}`}
-                className="w-24 h-24 rounded-sm object-cover"
+              <Image
+                src={data?.recruiter.photo ?? ""}
+                alt={data?.recruiter.fullname ?? ""}
+                width={100}
+                height={100}
               />
               <div className="flex flex-col ">
                 <h1 className="text-lg font-bold capitalize">{data?.title}</h1>
