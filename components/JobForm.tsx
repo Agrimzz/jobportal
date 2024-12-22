@@ -1,5 +1,6 @@
 "use client"
 import Button from "@/components/Button"
+import { jobFormSchema } from "@/lib/validator"
 import useAuthStore from "@/store/useAuthstore"
 import { FormProps } from "@/types"
 import axios from "axios"
@@ -58,6 +59,11 @@ const JobForm = ({ action, job }: FormProps) => {
     }
 
     try {
+      const validate = jobFormSchema.safeParse(payload)
+      if (!validate.success) {
+        setError(validate.error.issues[0].message)
+        return
+      }
       if (action === "Create") {
         const response = await axios.post("/api/job/create", payload)
         if (response.status === 200) {
@@ -137,6 +143,7 @@ const JobForm = ({ action, job }: FormProps) => {
                 type="number"
                 name="experience"
                 min={0}
+                max={20}
                 placeholder="eg. 2"
                 className="p-2 outline-none border-[1px] rounded-md"
                 value={formData.experience}

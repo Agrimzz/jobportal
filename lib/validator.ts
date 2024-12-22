@@ -23,3 +23,14 @@ export const recruiterSchema = z.object({
   location: z.string().min(1, "Location is required"),
   url: z.string().url("Company URL must be a valid URL"),
 })
+
+export const jobFormSchema = z.object({
+  title: z
+    .string()
+    .min(1, "Job title is required")
+    .max(30, "Job title is too long"),
+  type: z.string().min(1, "Job type is required"),
+  description: z.string().min(1, "Job description is required"),
+  salary: z.string().min(1, "Salary is required"),
+  experience: z.string().min(1, "Experience is required"),
+})
