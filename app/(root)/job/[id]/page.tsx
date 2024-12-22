@@ -16,7 +16,7 @@ import { useParams } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
 export default function JobPage() {
-  const { userId, name, email } = useAuthStore()
+  const { userId, name, email, type } = useAuthStore()
 
   const params = useParams()
   const id = params.id
@@ -70,7 +70,7 @@ export default function JobPage() {
             <Button
               title="Apply now"
               className="bg-primary text-white"
-              disabled={!isLoggedIn}
+              disabled={!isLoggedIn || type === "recruiter"}
               onClick={() => setShowModal(true)}
             />
           </div>

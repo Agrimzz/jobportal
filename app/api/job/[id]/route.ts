@@ -53,3 +53,35 @@ export const DELETE = async (
     })
   }
 }
+
+export const PUT = async (
+  req: Request,
+  { params }: { params: { id: string } }
+) => {
+  const { id } = params
+
+  try {
+    const payload = await req.json()
+
+    await connectToDatabase()
+
+    const updatedJob = await Job.findByIdAndUpdate(id, payload, {
+      new: true,
+      runValidators: true,
+    })
+
+    if (!updatedJob) {
+      return new Response(JSON.stringify({ message: "Job not found" }), {
+        status: 404,
+      })
+    }
+
+    return new Response(JSON.stringify({ job: updatedJob }), { status: 200 })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    console.error("Error updating job:", error)
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+    })
+  }
+}

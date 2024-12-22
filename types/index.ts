@@ -1,3 +1,5 @@
+import { IJob } from "@/lib/database/models/job.modal"
+
 export type ButtonProps = {
   title: string
   className?: string
@@ -26,4 +28,9 @@ export type ApplyModalProps = {
   name: string | null
   showModal: boolean
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export type FormProps = {
+  action: "Create" | "Update"
+  job?: IJob
 }

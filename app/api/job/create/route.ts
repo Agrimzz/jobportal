@@ -7,7 +7,6 @@ export const POST = async (req: Request) => {
     await req.json()
 
   try {
-    console.log(recruiter)
     await connectToDatabase()
     const organization = await User.findOne({ _id: recruiter })
     if (!organization) {
@@ -23,6 +22,7 @@ export const POST = async (req: Request) => {
       experience,
       recruiter,
     })
+    console.log(newJob)
     return new Response(JSON.stringify(newJob), { status: 200 })
   } catch (error) {
     console.log(error)

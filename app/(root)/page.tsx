@@ -58,26 +58,37 @@ const Home = () => {
       <section className="bg-gray-100 w-full py-16">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl font-bold">Browse Jobs</h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-            {jobs.map((job) => (
-              <JobCard
-                key={job._id}
-                id={job._id}
-                title={job.title}
-                description={job.description}
-                salary={job.salary}
-                recruiter={job.recruiter.fullname}
-                photo={job.recruiter.photo}
-                type={job.type}
-                location={job.recruiter.location}
-                recruiterId={job.recruiter._id}
-                fetch={fetchJobs}
-                page={page}
-              />
-            ))}
-          </div>
-
+          {jobs.length === 0 && !isLoading ? (
+            <div className="w-full flex justify-center items-center h-[40vh]">
+              <p className="text-xl font-bold">
+                No Jobs Found{" "}
+                {page > 1 && (
+                  <button onClick={goToPreviousPage} className="text-primary">
+                    Go to Previous Page
+                  </button>
+                )}
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+              {jobs.map((job) => (
+                <JobCard
+                  key={job._id}
+                  id={job._id}
+                  title={job.title}
+                  description={job.description}
+                  salary={job.salary}
+                  recruiter={job.recruiter.fullname}
+                  photo={job.recruiter.photo}
+                  type={job.type}
+                  location={job.recruiter.location}
+                  recruiterId={job.recruiter._id}
+                  fetch={fetchJobs}
+                  page={page}
+                />
+              ))}
+            </div>
+          )}
           {isLoading && (
             <div className="w-full flex justify-center items-center h-[40vh]">
               <IconLoader2 className="animate-spin text-primary" size={48} />
