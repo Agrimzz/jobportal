@@ -4,7 +4,7 @@ import User from "@/lib/database/models/user.modal"
 
 export const GET = async (
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) => {
   const { id } = await params
 
@@ -26,7 +26,7 @@ export const GET = async (
 
 export const DELETE = async (
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) => {
   const { id } = await params
   console.log(id)
@@ -56,9 +56,9 @@ export const DELETE = async (
 
 export const PUT = async (
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) => {
-  const { id } = params
+  const { id } = await params
 
   try {
     const payload = await req.json()

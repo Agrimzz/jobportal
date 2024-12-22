@@ -101,7 +101,7 @@ const CandidateRegister = () => {
             Confirm Password
           </label>
           <input
-            type="cpassword"
+            type="password"
             name="cpassword"
             placeholder="Enter your confirm password"
             className="p-2 outline-none border-[1px] rounded-md"

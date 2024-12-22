@@ -3,7 +3,7 @@ import Application from "@/lib/database/models/application.modal"
 
 export const POST = async (
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) => {
   const { id } = await params
 

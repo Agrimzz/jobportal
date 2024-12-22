@@ -44,7 +44,7 @@ export default function JobPage() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-[90vh]">
+      <div className="flex items-center justify-center h-[90vh] bg-gray-100">
         <IconLoader2 className="animate-spin text-primary" size={48} />
       </div>
     )

@@ -4,7 +4,12 @@ import React from "react"
 import Button from "./Button"
 import { useRouter } from "next/navigation"
 import useAuthStore from "@/store/useAuthstore"
-import { IconPencil, IconTrash } from "@tabler/icons-react"
+import {
+  IconPencil,
+  IconStar,
+  IconStarFilled,
+  IconTrash,
+} from "@tabler/icons-react"
 import Link from "next/link"
 import axios from "axios"
 
@@ -22,7 +27,13 @@ const JobCard = ({
   page,
 }: JobCardProps) => {
   const router = useRouter()
-  const { userId } = useAuthStore()
+  const {
+    userId,
+    type: userType,
+    addFavourite,
+    favourites,
+    removeFavourite,
+  } = useAuthStore()
 
   const handleDelete = async () => {
     const isConfirmed = window.confirm(
@@ -42,6 +53,7 @@ const JobCard = ({
       alert("Failed to delete the job. Please try again later.")
     }
   }
+
   return (
     <div className="bg-white p-12 rounded-lg space-y-4">
       <div className="flex justify-between">
@@ -68,6 +80,21 @@ const JobCard = ({
               onClick={handleDelete}
             />
           </div>
+        )}
+        {userType === "candidate" && (
+          <>
+            {favourites?.includes(id ?? "") ? (
+              <IconStarFilled
+                className="text-primary cursor-pointer"
+                onClick={() => removeFavourite(id ?? "")}
+              />
+            ) : (
+              <IconStar
+                className="text-primary cursor-pointer"
+                onClick={() => addFavourite(id ?? "")}
+              />
+            )}
+          </>
         )}
       </div>
 

@@ -37,7 +37,7 @@ const ApplyModal = ({
         alert("Something went wrong. Please try again later.")
       }
 
-      uploadedFileUrl = uploadedFile[0].url
+      uploadedFileUrl = (uploadedFile && uploadedFile[0].url) ?? ""
     }
     const formData = new FormData(e.target as HTMLFormElement)
     const payload = {
