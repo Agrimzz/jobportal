@@ -14,6 +14,9 @@ export type JobCardProps = {
   recruiter: string
   location: string
   photo: string
+  recruiterId: string
+  fetch: (currentPage: number) => Promise<void>
+  page: number
 }
 
 export type ApplyModalProps = {

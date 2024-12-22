@@ -71,6 +71,9 @@ const Home = () => {
                 photo={job.recruiter.photo}
                 type={job.type}
                 location={job.recruiter.location}
+                recruiterId={job.recruiter._id}
+                fetch={fetchJobs}
+                page={page}
               />
             ))}
           </div>
