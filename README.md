@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 For dependendencies run:
 ```bash
-npm install --legacy-peers-dev
+npm install --legacy-peer-devs
 ```
 
 First, run the development server:
