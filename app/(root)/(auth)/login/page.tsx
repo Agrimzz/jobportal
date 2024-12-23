@@ -10,9 +10,11 @@ const Login = () => {
   const router = useRouter()
   const setUser = useAuthstore((state) => state.setUser)
   const [error, setError] = useState("")
+  const [loggingIn, setLoggingIn] = useState(false)
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
+    setLoggingIn(true)
     const formData = new FormData(e.target as HTMLFormElement)
 
     const payload = {
@@ -40,6 +42,8 @@ const Login = () => {
       } else {
         setError("Something went wrong. Please try again later.")
       }
+    } finally {
+      setLoggingIn(false)
     }
   }
   return (
@@ -74,7 +78,11 @@ const Login = () => {
         </div>
         {error && <p className="text-red-500 text-center">{error}</p>}
 
-        <Button title="Sign In" className="w-full  bg-primary text-white " />
+        <Button
+          title={loggingIn ? "Logging in..." : "Login"}
+          className="w-full  bg-primary text-white "
+          disabled={loggingIn}
+        />
       </form>
       <div className="flex flex-col space-y-2 items-center">
         <p className="text-gray-400">Don{"'"}t have an account? Register as</p>

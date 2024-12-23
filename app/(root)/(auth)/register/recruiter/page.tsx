@@ -172,7 +172,7 @@ const RecruiterRegsiter = () => {
         </div>
         {error && <p className="text-red-500 text-center">{error}</p>}
         <Button
-          title="Sign Up"
+          title={isSending ? "Please wait..." : "Register"}
           className="w-full  bg-primary text-white "
           disabled={isSending}
         />

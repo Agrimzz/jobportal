@@ -9,9 +9,10 @@ import React, { useState } from "react"
 const CandidateRegister = () => {
   const router = useRouter()
   const [error, setError] = useState("")
+  const [registering, setRegistering] = useState(false)
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
+    setRegistering(true)
     const formData = new FormData(e.target as HTMLFormElement)
 
     const payload = {
@@ -50,6 +51,8 @@ const CandidateRegister = () => {
         // Fallback for unexpected errors
         setError("Something went wrong. Please try again later.")
       }
+    } finally {
+      setRegistering(false)
     }
   }
 
@@ -110,7 +113,11 @@ const CandidateRegister = () => {
         </div>
         {error && <p className="text-red-500 text-center">{error}</p>}
 
-        <Button title="Sign Up" className="w-full  bg-primary text-white " />
+        <Button
+          title={registering ? "Please wait..." : "Register"}
+          className="w-full  bg-primary text-white"
+          disabled={registering}
+        />
       </form>
 
       <div className="flex flex-col space-y-2 items-center">
