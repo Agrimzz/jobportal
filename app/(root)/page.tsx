@@ -3,18 +3,30 @@ import React, { useEffect, useState } from "react"
 import JobCard from "@/components/JobCard"
 import axios from "axios"
 import { IJob } from "@/lib/database/models/job.modal"
-import { IconArrowLeft, IconArrowRight, IconLoader2 } from "@tabler/icons-react"
+import {
+  IconArrowLeft,
+  IconArrowRight,
+  IconLoader2,
+  IconSearch,
+} from "@tabler/icons-react"
+import { useSearchParams, useRouter } from "next/navigation"
 
 const Home = () => {
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
   const [jobs, setJobs] = useState<IJob[]>([])
   const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
   const [hasMore, setHasMore] = useState(true)
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "")
 
-  const fetchJobs = async (currentPage: number) => {
+  const fetchJobs = async (currentPage: number, query: string = "") => {
     setIsLoading(true)
     try {
-      const response = await axios.get(`/api/job?limit=6&page=${currentPage}`)
+      const response = await axios.get(
+        `/api/job?limit=6&page=${currentPage}&q=${query}`
+      )
       const { data, nextPage } = response.data
       setJobs(data)
       setHasMore(!!nextPage)
@@ -25,20 +37,23 @@ const Home = () => {
     }
   }
 
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setPage(1)
+    fetchJobs(1, searchQuery)
+    router.push(`/?q=${searchQuery}`)
+  }
+
   useEffect(() => {
-    fetchJobs(page)
+    fetchJobs(page, searchQuery)
   }, [page])
 
   const goToNextPage = () => {
-    setJobs([])
     if (hasMore) setPage((prevPage) => prevPage + 1)
   }
 
   const goToPreviousPage = () => {
-    if (page > 1) {
-      setJobs([])
-      setPage((prevPage) => prevPage - 1)
-    }
+    if (page > 1) setPage((prevPage) => prevPage - 1)
   }
 
   return (
@@ -52,12 +67,36 @@ const Home = () => {
             Discover your next career move or find the perfect candidate with
             our seamless hiring platform.
           </p>
+          <form
+            onSubmit={handleSearchSubmit}
+            className="flex mt-8 justify-between items-center max-w-xl mx-auto bg-white"
+          >
+            <input
+              type="text"
+              name="search"
+              placeholder="Search Jobs"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="p-2  text-black w-full outline-none"
+            />
+
+            <button type="submit" className="bg-white text-primary p-2 ">
+              <IconSearch />
+            </button>
+          </form>
         </div>
       </section>
 
       <section className="bg-gray-100 w-full py-16">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl font-bold">Browse Jobs</h2>
+          {searchParams && searchParams.get("q") && (
+            <p className="text-base text-gray-500">
+              Showing results for {"'"}
+              <span className="text-primary">{searchParams.get("q")}</span>
+              {"'"}
+            </p>
+          )}
           {jobs.length === 0 && !isLoading ? (
             <div className="w-full flex justify-center items-center h-[40vh]">
               <p className="text-xl font-bold">
